@@ -1,0 +1,234 @@
+
+<?php $__env->startSection('content'); ?>
+
+  <h1><?php echo trans('briefings.title'); ?></h1>
+
+  <hr>
+
+  <?php echo $__env->make('includes.messages', array_except(get_defined_vars(), array('__data', '__path')))->render(); ?>
+
+  <ul class="nav nav-tabs">
+    <li class="active"><a href="#list" data-toggle="tab"><?php echo trans('briefings.show'); ?></a></li>
+    <li><a href="#addEdit" data-toggle="tab"><span id="addEditTitleLabel"></span></a></li>
+  </ul>
+
+  <div id="myTabContent" class="tab-content">
+    <br>
+    <div class="tab-pane active in" id="list">
+      <?php if($briefings && $briefings->count()): ?>
+        <table id="briefings" class="table table-striped" cellspacing="0" width="100%">
+          <thead>
+          <tr>
+            <th><?php echo trans('briefings.id'); ?></th>
+            <th><?php echo trans('briefings.dateBriefing'); ?></th>
+            <th><?php echo trans('briefings.customerId'); ?></th>
+            <th><?php echo trans('briefings.customer'); ?></th>
+            <th><?php echo trans('briefings.customerTypeId'); ?></th>
+            <th><?php echo trans('briefings.customerType'); ?></th>
+            <th><?php echo trans('briefings.contactId'); ?></th>
+            <th><?php echo trans('briefings.contact'); ?></th>
+            <th><?php echo trans('briefings.productId'); ?></th>
+            <th><?php echo trans('briefings.product'); ?></th>
+            <th><?php echo trans('briefings.iolProductId'); ?></th>
+            <th><?php echo trans('briefings.iolProduct'); ?></th>
+            <th><?php echo trans('briefings.sourceId'); ?></th>
+            <th><?php echo trans('briefings.source'); ?></th>
+            <th><?php echo trans('briefings.sourceTypeId'); ?></th>
+            <th><?php echo trans('briefings.sourceType'); ?></th>
+            <th><?php echo trans('briefings.ownerId'); ?></th>
+            <th><?php echo trans('briefings.owner'); ?></th>
+            <th><?php echo trans('briefings.challenge'); ?></th>
+            <th><?php echo trans('briefings.userId'); ?></th>
+            <th><?php echo trans('profile.user'); ?></th>
+            <th><?php echo trans('briefings.dateCreated'); ?></th>
+            <th><?php echo trans('briefings.userUpdatedId'); ?></th>
+            <th><?php echo trans('briefings.userUpdated'); ?></th>
+            <th><?php echo trans('briefings.dateUpdated'); ?></th>
+            <th></th>
+            <th></th>
+            <th></th>
+            <th></th>
+          </tr>
+          </thead>
+          <tbody>
+          <?php foreach($briefings as $briefing): ?>
+            <tr>
+              <td><?php echo $briefing->id; ?></td>
+              <td><?php echo $briefing->date_briefing->format(trans('system.dateFormat')); ?></td>
+              <td><?php echo $briefing->customer_id; ?></td>
+              <td><?php echo $briefing->customer->name; ?></td>
+              <td><?php echo $briefing->customer_type_id; ?></td>
+              <td><?php echo $briefing->customerType->type; ?></td>
+              <td><?php echo $briefing->contact_id; ?></td>
+              <td><?php echo $briefing->contact->name; ?></td>
+              <td><?php echo $briefing->prod_id; ?></td>
+              <td><?php echo $briefing->product->name; ?></td>
+              <td><?php echo $briefing->iol_prod_id; ?></td>
+              <td><?php echo $briefing->iolProduct->name; ?></td>
+              <td><?php echo $briefing->briefing_source_id; ?></td>
+              <td><?php echo $briefing->briefingSource->name; ?></td>
+              <td><?php echo $briefing->briefingSource->briefing_source_type_id; ?></td>
+              <td><?php echo $briefing->briefingSource->briefingSourceType->type; ?></td>
+              <td><?php echo $briefing->briefing_owner_id; ?></td>
+              <td><?php echo $briefing->briefingOwner->name; ?></td>
+              <td><?php echo $briefing->challenge; ?></td>
+              <td><?php echo $briefing->user_id; ?></td>
+              <td><?php echo $briefing->user->email; ?></td>
+              <td><?php echo $briefing->created_at->format(trans('system.dateFormat')); ?></td>
+              <td><?php echo $briefing->last_updated_user_id; ?></td>
+              <td><?php echo $briefing->userUpdated->email; ?></td>
+              <td><?php echo $briefing->updated_at->format(trans('system.dateFormat')); ?></td>
+              <td>
+                <?php echo Form::open(array('route' => 'load_edit_budget')); ?>
+
+                <input type="hidden" name="idBriefingRecToEdit" value="<?php echo $briefing->id; ?>">
+                <input type="hidden" name="activeTab" value="#addEdit">
+                <button type="submit" class="btn btn-default" title="<?php echo trans('briefings.addBudget'); ?>">
+                	<span class="glyphicon glyphicon-plus" aria-hidden="true"></span>
+                </button>
+                <?php echo Form::close(); ?>
+
+              </td>
+              <td>
+                <?php echo Form::open(array('route' => 'post_budgets')); ?>
+
+                <input type="hidden" name="masterBriefingId" value="<?php echo $briefing->id; ?>">
+                <button type="submit" class="btn btn-default" title="<?php echo trans('briefings.linkedBudgets'); ?>">
+                	<span class="glyphicon glyphicon-list-alt" aria-hidden="true"></span>
+                </button>
+                <?php echo Form::close(); ?>
+
+              </td>
+              <td>
+                <?php echo Form::open(array('route' => 'load_edit_briefing')); ?>
+
+                <input type="hidden" name="idRecToEdit" value="<?php echo $briefing->id; ?>">
+                <button type="submit" class="btn btn-default" title="<?php echo trans('briefings.edit'); ?>">
+                	<span class="glyphicon glyphicon-pencil" aria-hidden="true"></span>
+                </button>
+                <?php echo Form::close(); ?>
+
+              </td>
+              <td>
+                <?php echo Form::open(array('route' => 'delete_briefing')); ?>
+
+                <input type="hidden" name="id" value="<?php echo $briefing->id; ?>">
+                <button type="submit" class="close">&times;</button>
+                <?php echo Form::close(); ?>
+
+              </td>
+            </tr>
+          <?php endforeach; ?>
+          </tbody>
+        </table>
+        <div id="dtButtons"></div>
+      <?php else: ?>
+        <p><?php echo trans('master.zeroRecords'); ?></p>
+      <?php endif; ?>
+    </div>
+
+    <div class="tab-pane" id="addEdit">
+      <?php echo Form::open(array('route' => 'add_update_briefing', 'style'=>'display:inline-block')); ?>
+
+	  <div class="form-group">
+	  	<label for="dateBriefing"><?php echo trans('briefings.dateBriefing'); ?></label>
+	  	<div class="input-group">
+	  		<input name="dateBriefing" id="dateBriefing" type="text" class="date-input form-control" placeholder="<?php echo trans('briefings.dateBriefingPH'); ?>" />
+	  		<span class="input-group-btn">
+	  			<button name="dateBriefingButton" id="dateBriefingButton" class="date-button btn btn-default" type="button"><span class="glyphicon glyphicon-calendar" aria-hidden="true"></span></button>
+	  		</span>
+	  	</div>
+	  	<div id="datePickerBriefing"></div>
+	  </div>
+      <div class="form-group">
+        <label for="customer"><?php echo trans('briefings.customer'); ?></label>
+        <select name="customer" id="customer" class="form-control" placeholder="<?php echo trans('briefings.customerPH'); ?>">
+        	<option value="-1/-1"><?php echo trans('briefings.customerPH'); ?></option>
+        <?php foreach($relationships['customers'] as $customer): ?>
+        	<option value="<?php echo $customer->id; ?>/<?php echo $customer->customerType->id; ?>"><?php echo $customer->name; ?></option>
+        <?php endforeach; ?>
+        </select>
+      </div>
+      <div class="form-group">
+        <label for="customerType"><?php echo trans('briefings.customerType'); ?></label>
+        <select name="customerType" id="customerType" class="form-control" placeholder="<?php echo trans('briefings.customerTypePH'); ?>">
+        	<option value="-1"><?php echo trans('briefings.customerTypePH'); ?></option>
+        <?php foreach($relationships['customerTypes'] as $customerType): ?>
+        	<option value="<?php echo $customerType->id; ?>"><?php echo $customerType->type; ?></option>
+        <?php endforeach; ?>
+        </select>
+      </div>
+      <div class="form-group">
+        <label for="contact"><?php echo trans('briefings.contact'); ?></label>
+        <select name="contact" id="contact" class="form-control" placeholder="<?php echo trans('briefings.contactPH'); ?>">
+        </select>
+      </div>
+      <div class="form-group">
+        <label for="product"><?php echo trans('briefings.product'); ?></label>
+        <select name="product" id="product" class="form-control" placeholder="<?php echo trans('briefings.productPH'); ?>">
+        	<option value="-1"><?php echo trans('briefings.productPH'); ?></option>
+        <?php foreach($relationships['products'] as $product): ?>
+        	<option value="<?php echo $product->id; ?>"><?php echo $product->name; ?></option>
+        <?php endforeach; ?>
+        </select>
+      </div>
+      <div class="form-group">
+        <label for="iolProduct"><?php echo trans('briefings.iolProduct'); ?></label>
+        <select name="iolProduct" id="iolProduct" class="form-control" placeholder="<?php echo trans('briefings.iolProductPH'); ?>">
+        	<option value="-1"><?php echo trans('briefings.iolProductPH'); ?></option>
+        <?php foreach($relationships['iolProducts'] as $iolProduct): ?>
+        	<option value="<?php echo $iolProduct->id; ?>"><?php echo $iolProduct->name; ?></option>
+        <?php endforeach; ?>
+        </select>
+      </div>
+      <div class="form-group">
+        <label for="briefingSource"><?php echo trans('briefings.source'); ?></label>
+        <select name="briefingSource" id="briefingSource" class="form-control" placeholder="<?php echo trans('briefings.sourcePH'); ?>">
+        </select>
+      </div>
+      <div class="form-group">
+        <label for="briefingOwner"><?php echo trans('briefings.owner'); ?></label>
+        <select name="briefingOwner" id="briefingOwner" class="form-control" placeholder="<?php echo trans('briefings.ownerPH'); ?>">
+        	<option value="-1"><?php echo trans('briefings.ownerPH'); ?></option>
+        <?php foreach($relationships['briefingOwners'] as $briefingOwner): ?>
+        	<option value="<?php echo $briefingOwner->id; ?>"><?php echo $briefingOwner->name; ?></option>
+        <?php endforeach; ?>
+        </select>
+      </div>
+      <div class="form-group">
+      	<label for="challenge"><?php echo trans('briefings.challenge'); ?></label>
+		<input name="challenge" id="challenge" type="checkbox" value="1">
+      </div>
+      <div class="form-group">
+      	  <input type="hidden" name="idRec" id="idRec" value="*">
+	      <button class="btn btn-default" type="submit"><?php echo trans('briefings.save'); ?></button>
+	      <?php echo Form::close(); ?>
+
+	      <?php if(isset($briefingToEdit)): ?>
+		  <?php echo Form::open(array('route' => 'load_edit_budget', 'style'=>'display:inline-block')); ?>
+
+	      <input type="hidden" name="idBriefingRecToEdit" value="<?php echo $briefingToEdit->id; ?>">
+	      <input type="hidden" name="activeTab" value="#addEdit">
+	      <button type="submit" id="addBudget" class="btn btn-default" title="<?php echo trans('briefings.addBudget'); ?>">
+	      	<span class="glyphicon glyphicon-plus" aria-hidden="true"></span>
+	      </button>
+	      <?php echo Form::close(); ?>
+
+	      <?php echo Form::open(array('route' => 'post_budgets', 'style'=>'display:inline-block')); ?>
+
+	      <input type="hidden" name="masterBriefingId" value="<?php echo $briefingToEdit->id; ?>">
+	      <button type="submit" id="linkedBudgets" class="btn btn-default" title="<?php echo trans('briefings.linkedBudgets'); ?>">
+	      	<span class="glyphicon glyphicon-list-alt" aria-hidden="true"></span>
+	      </button>
+	      <?php echo Form::close(); ?>
+
+	      <?php endif; ?>
+		</div>
+    </div>
+    
+	<?php echo Html::script('js/briefings.js');; ?>
+
+
+<?php $__env->stopSection(); ?>
+
+<?php echo $__env->make('layouts.master',['activePage' => 'briefings'], array_except(get_defined_vars(), array('__data', '__path')))->render(); ?>

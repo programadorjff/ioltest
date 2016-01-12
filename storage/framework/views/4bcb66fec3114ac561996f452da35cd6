@@ -1,0 +1,64 @@
+<?php $__env->startSection('content'); ?>
+
+  <h1><?php echo trans('navBar.settings'); ?></h1>
+
+  <hr>
+
+  <?php echo $__env->make('includes.messages', array_except(get_defined_vars(), array('__data', '__path')))->render(); ?>
+
+  <ul class="nav nav-tabs">
+    <li class="active"><a href="#email" data-toggle="tab"><?php echo trans('userSettings.emailSetting'); ?></a></li>
+    <li><a href="#password" data-toggle="tab"><?php echo trans('userSettings.passSetting'); ?></a></li>
+  </ul>
+
+  <div id="myTabContent" class="tab-content">
+    <div class="tab-pane active in" id="email">
+      <h3><?php echo trans('userSettings.changeEmail'); ?></h3>
+      <?php echo Form::open(array('route' => 'change_email')); ?>
+
+      <div class="form-group">
+        <label for="current_email"><?php echo trans('userSettings.currentEmail'); ?></label>
+        <input name="current_email" type="email" class="form-control"
+               value="<?php echo Auth::user()->email; ?>" disabled>
+      </div>
+      <div class="form-group">
+        <label for="new_email"><?php echo trans('userSettings.newEmail'); ?></label>
+        <input name="new_email" type="email" class="form-control" placeholder="<?php echo trans('userSettings.newEmail'); ?>" required>
+      </div>
+      <div class="form-group">
+        <label for="current_password"><?php echo trans('userSettings.currentPass'); ?></label>
+        <input name="current_password" type="password" class="form-control" placeholder="<?php echo trans('userSettings.currentPass'); ?>"
+               required>
+      </div>
+      <button class="btn btn-default" type="submit"><?php echo trans('userSettings.changeEmail'); ?></button>
+      <?php echo Form::close(); ?>
+
+    </div>
+
+    <div class="tab-pane" id="password">
+      <h3><?php echo trans('userSettings.changePass'); ?></h3>
+      <?php echo Form::open(array('route' => 'change_password')); ?>
+
+      <div class="form-group">
+        <label for="current_password"><?php echo trans('userSettings.currentPass'); ?></label>
+        <input name="current_password" type="password" class="form-control" placeholder="<?php echo trans('userSettings.currentPass'); ?>"
+               required>
+      </div>
+      <div class="form-group">
+        <label for="new_password"><?php echo trans('userSettings.newPass'); ?></label>
+        <input name="new_password" type="password" class="form-control" placeholder="<?php echo trans('userSettings.newPass'); ?>" required>
+      </div>
+      <div class="form-group">
+        <label for="new_password_confirmation"><?php echo trans('userSettings.confNewPass'); ?></label>
+        <input name="new_password_confirmation" type="password" class="form-control"
+               placeholder="<?php echo trans('userSettings.confNewPass'); ?>" required>
+      </div>
+      <button class="btn btn-default" type="submit"><?php echo trans('userSettings.changePass'); ?></button>
+      <?php echo Form::close(); ?>
+
+    </div>
+  </div>
+
+<?php $__env->stopSection(); ?>
+
+<?php echo $__env->make('layouts.master', array_except(get_defined_vars(), array('__data', '__path')))->render(); ?>

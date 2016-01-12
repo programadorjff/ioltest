@@ -1,0 +1,8 @@
+body {
+	padding-top: 60px;
+}
+
+/* This makes Datatables prettier */
+#briefings_filter, #briefings_paginate {
+	float: right;
+}

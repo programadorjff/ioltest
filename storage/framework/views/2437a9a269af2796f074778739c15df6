@@ -1,0 +1,23 @@
+<?php $__env->startSection('content'); ?>
+
+  <?php echo $__env->make('includes.messages', array_except(get_defined_vars(), array('__data', '__path')))->render(); ?>
+
+  <!-- Main jumbotron for a primary marketing message or call to action -->
+  <div class="jumbotron">
+    <h1><?php echo trans('dashboard.welcome'); ?>, <?php echo Auth::user()->email; ?></h1>
+
+    <p>&nbsp;&nbsp;&nbsp;<?php echo trans('dashboard.message'); ?></p>
+    <ul>
+        <li><a href="<?php echo e(route('get_briefings')); ?>"><?php echo trans('navBar.briefings'); ?></a></li>
+        <li><a href="<?php echo e(route('get_budgets')); ?>"><?php echo trans('navBar.budgets'); ?></a></li>
+        <li><a href="<?php echo route('show_profile', Auth::user()->id); ?>"><?php echo trans('navBar.profile'); ?></a></li>
+        <li><a href="<?php echo e(route('get_settings')); ?>"><?php echo trans('navBar.settings'); ?></a></li>
+    </ul>
+    <br>
+    
+    <p><a href="<?php echo e(route('get_logout')); ?>" class="btn btn-primary" role="button"><?php echo trans('navBar.signOut'); ?></a></p>
+  </div>
+
+<?php $__env->stopSection(); ?>
+
+<?php echo $__env->make('layouts.master', array_except(get_defined_vars(), array('__data', '__path')))->render(); ?>

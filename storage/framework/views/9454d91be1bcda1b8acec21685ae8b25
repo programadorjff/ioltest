@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="_token" content="<?php echo csrf_token(); ?>"/>
+  <link rel="icon" href="../../favicon.ico">
+
+  <title><?php echo trans('master.title'); ?></title>
+
+  <?php echo Html::style('css/style.css');; ?>
+
+  <?php echo Html::style('css/themes/classic.css');; ?>
+
+  <?php echo Html::style('css/themes/classic.date.css');; ?>
+
+  <?php echo Html::style('css/bootstrap.min.css');; ?>
+
+  <?php echo Html::style('css/selectize/selectize.bootstrap3.css');; ?>
+
+  <?php echo Html::style('css/datatables.bootstrap.min.css');; ?>
+
+  <?php echo Html::style('css/buttons.datatables.min.css');; ?>
+
+
+</head>
+
+<body role="document">
+<?php echo $__env->make('includes.navbar', array_except(get_defined_vars(), array('__data', '__path')))->render(); ?>
+<div class="container theme-showcase" role="main">
+
+  <?php echo $__env->yieldContent('content'); ?>
+
+</div>
+<?php echo Html::script('js/app.js');; ?>
+
+<?php echo Html::script('js/jquery.min.js');; ?>
+
+<?php echo Html::script('js/autonumeric.min.js');; ?>
+
+<?php echo Html::script('js/bootstrap.min.js');; ?>
+
+<?php echo Html::script('js/datatables.min.js');; ?>
+
+<?php echo Html::script('js/datatables.buttons.min.js');; ?>
+
+<?php echo Html::script('js/datatables.bootstrap.min.js');; ?>
+
+<?php echo Html::script('js/buttons.bootstrap.min.js');; ?>
+
+<?php echo Html::script('js/buttons.flash.min.js');; ?>
+
+<?php echo Html::script('js/buttons.html5.min.js');; ?>
+
+<?php echo Html::script('js/buttons.print.min.js');; ?>
+
+<?php echo Html::script('js/date.js');; ?>
+
+<?php echo Html::script('js/jszip.min.js');; ?>
+
+<?php echo Html::script('js/pdfmake.min.js');; ?>
+
+<?php echo Html::script('js/vfs_fonts.js');; ?>
+
+<?php echo Html::script('js/picker.js');; ?>
+
+<?php echo Html::script('js/picker.date.js');; ?>
+
+<?php echo Html::script('js/selectize.js');; ?>
+
+<?php echo Html::script('js/selectize.no.delete.js');; ?>
+
+
+<?php echo $__env->make('js.application', array_except(get_defined_vars(), array('__data', '__path')))->render(); ?>
+</body>
+</html>

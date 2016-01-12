@@ -1,0 +1,11 @@
+<?php $__env->startSection('content'); ?>
+
+  <h1><?php echo trans('profile.user'); ?> #<?php echo $user->email; ?></h1>
+  <p><?php echo trans('profile.owner', ['count' => $user->briefingCount(),'tableRows' => $briefingRows]); ?></p>
+
+  <hr>
+
+  <p><?php echo trans('profile.footer'); ?></p>
+
+<?php $__env->stopSection(); ?>
+<?php echo $__env->make('layouts.master', array_except(get_defined_vars(), array('__data', '__path')))->render(); ?>

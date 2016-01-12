@@ -1,0 +1,108 @@
+<script type="text/javascript">
+var searchBudgetsLabel = "<?php echo trans('budgets.searchBudgetsLabel'); ?>";
+var dateBudgetError = "<?php echo trans('briefings.dateBriefingError'); ?>";
+var dateBudgetValidationError = "<?php echo trans('budgets.dateBudgetValidationError'); ?>";
+var newDateBudgetVersionError = "<?php echo trans('budgets.newDateBudgetVersionError'); ?>";
+var rejectedReasonPH = "<?php echo trans('budgets.rejectedReasonPH'); ?>";
+var optionsBudgetRejected = [];
+var isAdding = true;
+var isMasterBriefingId = false;
+var masterBriefingId = -1;
+var addTitleLabel = "<?php echo trans('budgets.add'); ?>";
+var editTitleLabel = "<?php echo trans('budgets.edit'); ?>";
+var addEditTitleLabel = "<?php echo trans('budgets.edit'); ?>";
+var listTab = "#list";
+var addEditTab = "#addEdit";
+var activeTab = "<?php echo $activeTab; ?>";
+var isLoadCommon = true;
+
+<?php if(isset($isAdding)): ?>
+	isAdding = "<?php echo $isAdding; ?>";
+	addEditTitleLabel = "<?php echo $addEditTitleLabel; ?>";
+<?php endif; ?>
+
+<?php if(isset($masterBriefingId)): ?>
+	masterBriefingId = "<?php echo $masterBriefingId; ?>";
+	if (masterBriefingId > 0)
+		isMasterBriefingId = true;
+<?php endif; ?>
+
+var vIdRec,vIdBriefingRec,vCustomer,vCustomerType,vIolProduct,vNextBudgetId,vVersionNumber,vLastVersionDate,vNewDateBudgetVersion,vDateBudget,vBudgetType,vTotal,vRejected,vRejectedReason;
+<?php if(Input::old('idRec') !== null || Input::old('idBriefingRec') !== null || isset($budgetToEdit)): ?>
+	activeTab = addEditTab;
+	isLoadCommon = false;
+	isMasterBriefingId = true;
+	<?php if(Input::old('idRec') !== null || Input::old('idBriefingRec') !== null): ?>
+		vIdRec = "<?php echo Input::old('idRec'); ?>";
+		vIdBriefingRec = "<?php echo Input::old('idBriefingRec'); ?>";
+		masterBriefingId = vIdBriefingRec;
+		vCustomer = "<?php echo Input::old('customer'); ?>";
+		vCustomerType = "<?php echo Input::old('customerType'); ?>";
+		vIolProduct = "<?php echo Input::old('iolProduct'); ?>";
+		vNextBudgetId = "<?php echo Input::old('budgetId'); ?>";
+		vVersionNumber = "<?php echo Input::old('versionNumber'); ?>";
+		vLastVersionDate = "<?php echo Input::old('lastVersionDateOriginal'); ?>";
+		vNewDateBudgetVersion = "<?php echo Input::old('newDateBudgetVersion'); ?>";
+		vDateBudget = "<?php echo Input::old('dateBudget'); ?>";
+		vBudgetType = "<?php echo Input::old('budgetType'); ?>";
+		vTotal = "<?php echo Input::old('total'); ?>";
+		vRejected = "<?php echo Input::old('rejected'); ?>";
+		vRejectedReason = "<?php echo Input::old('rejectedReason'); ?>";
+		if (vIdRec != '*') {
+			isAdding = false;
+			addEditTitleLabel = editTitleLabel;
+		}
+	<?php else: ?>
+		vIdRec = "<?php echo $budgetToEdit->id; ?>";
+		vIdBriefingRec = "<?php echo $budgetToEdit->briefing_id; ?>";
+		vCustomer = "<?php echo $budgetToEdit->briefing->customer->name; ?>";
+		vCustomerType = "<?php echo $budgetToEdit->briefing->customerType->type; ?>";
+		vIolProduct = "<?php echo $budgetToEdit->briefing->iolProduct->name; ?>";
+		vNextBudgetId = "<?php echo $nextBudgetId; ?>";
+		vVersionNumber = "<?php echo $versionNumber; ?>";
+		vLastVersionDate = "<?php echo $lastVersionDate; ?>";
+		<?php /* vNewDateBudgetVersion = "<?php echo $newDateBudgetVersion; ?>"; */ ?>
+		vNewDateBudgetVersion = null;
+		vDateBudget = "<?php echo $budgetToEdit->date_budget; ?>";
+		vBudgetType = "<?php echo $budgetToEdit->budget_type_id; ?>";
+		vTotal = "<?php echo $budgetToEdit->total; ?>";
+		vRejected = "<?php echo $budgetToEdit->rejected; ?>";
+		vRejectedReason = "<?php echo $budgetToEdit->rejected_reason; ?>";
+	<?php endif; ?>
+	if (isEmpty(vLastVersionDate))
+		vLastVersionDate = null;
+	else
+		vLastVersionDate = new Date(vLastVersionDate);
+	if (isEmpty(vNewDateBudgetVersion))
+		vNewDateBudgetVersion = null;
+	else
+		vNewDateBudgetVersion = new Date(vNewDateBudgetVersion);
+	if (isEmpty(vDateBudget))
+		vDateBudget = null;
+	else
+		vDateBudget = new Date(vDateBudget);
+	if (isEmpty(vBudgetType))
+		vBudgetType = -1;
+	if (isEmpty(vRejected))
+		vRejected = 0;
+<?php elseif(isset($masterBriefing)): ?>
+		vIdRec = "*";
+		vIdBriefingRec = "<?php echo $masterBriefing->id; ?>";
+		vCustomer = "<?php echo $masterBriefing->customer->name; ?>";
+		vCustomerType = "<?php echo $masterBriefing->customerType->type; ?>";
+		vIolProduct = "<?php echo $masterBriefing->iolProduct->name; ?>";
+		vNextBudgetId = "<?php echo $nextBudgetId; ?>";
+<?php endif; ?>
+
+optionsBudgetRejected.push("{ value:'-1', text:'<?php echo trans('budgets.rejectedPH'); ?>' }");
+optionsBudgetRejected.push("{ value:'0', text:'<?php echo trans('budgets.rejectedNotSpec'); ?>' }");
+optionsBudgetRejected.push("{ value:'1', text:'<?php echo trans('budgets.rejectedTrue'); ?>' }");
+optionsBudgetRejected.push("{ value:'2', text:'<?php echo trans('budgets.rejectedFalse'); ?>' }");
+optionsBudgetRejected = optionsBudgetRejected.join(",");
+optionsBudgetRejected = "[" + optionsBudgetRejected + "]";
+
+$(document).ready(function() {
+	if (typeof budgetsConfig === 'function')
+		budgetsConfig();
+});
+</script>

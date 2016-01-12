@@ -1,0 +1,86 @@
+<script type="text/javascript">
+var searchBriefingsLabel = "<?php echo trans('briefings.searchBriefingsLabel'); ?>";
+var dateBriefingError = "<?php echo trans('briefings.dateBriefingError'); ?>";
+var optionsBriefingSource = [];
+var optionsGroupBriefingSource = [];
+var lastOptionsGroupBriefingSourceValue = "";
+var isAdding = true;
+var addTitleLabel = "<?php echo trans('briefings.add'); ?>";
+var editTitleLabel = "<?php echo trans('briefings.edit'); ?>";
+var addEditTitleLabel = "<?php echo trans('briefings.edit'); ?>";
+var listTab = "#list";
+var addEditTab = "#addEdit";
+var activeTab = listTab;
+
+<?php if(isset($isAdding)): ?>
+	isAdding = "<?php echo $isAdding; ?>";
+	addEditTitleLabel = "<?php echo $addEditTitleLabel; ?>";
+<?php endif; ?>
+
+<?php if(isset($relationships)): ?>
+	<?php foreach($relationships['briefingSources'] as $briefingSource): ?>
+		optionsBriefingSource.push("{ value:'<?php echo $briefingSource->id; ?>', text:'<?php echo $briefingSource->name; ?>', group:'<?php echo $briefingSource->briefingSourceType->id; ?>' }");
+		if (lastOptionsGroupBriefingSourceValue == "" || (lastOptionsGroupBriefingSourceValue != "" && lastOptionsGroupBriefingSourceValue != "{value: '<?php echo $briefingSource->briefingSourceType->id; ?>', text: '<?php echo $briefingSource->briefingSourceType->type; ?>'}"))
+			optionsGroupBriefingSource.push("{value: '<?php echo $briefingSource->briefingSourceType->id; ?>', text: '<?php echo $briefingSource->briefingSourceType->type; ?>'}");
+		lastOptionsGroupBriefingSourceValue = "{value: '<?php echo $briefingSource->briefingSourceType->id; ?>', text: '<?php echo $briefingSource->briefingSourceType->type; ?>'}";
+	<?php endforeach; ?>
+<?php endif; ?>
+
+var vIdRec,vDateBriefing,vCustomer,vCustomerType,vContact,vProduct,vIolProduct,vBriefingSource,vBriefingOwner,vChallenge;
+
+<?php if(Input::old('idRec') !== null || isset($briefingToEdit)): ?>
+	activeTab = addEditTab;
+	<?php if(Input::old('idRec') !== null): ?>
+		vIdRec = "<?php echo Input::old('idRec'); ?>";
+		vDateBriefing = "<?php echo Input::old('dateBriefing'); ?>";
+		vCustomer = "<?php echo Input::old('customer'); ?>";
+		vCustomerType = "<?php echo Input::old('customerType'); ?>";
+		vContact = "<?php echo Input::old('contact'); ?>";
+		vProduct = "<?php echo Input::old('product'); ?>";
+		vIolProduct = "<?php echo Input::old('iolProduct'); ?>";
+		vBriefingSource = "<?php echo Input::old('briefingSource'); ?>";
+		vBriefingOwner = "<?php echo Input::old('briefingOwner'); ?>";
+		vChallenge = "<?php echo Input::old('challenge'); ?>";
+		if (vIdRec != '*') {
+			isAdding = false;
+			addEditTitleLabel = editTitleLabel;
+		}
+	<?php else: ?>
+		vIdRec = "<?php echo $briefingToEdit->id; ?>";
+		vDateBriefing = "<?php echo $briefingToEdit->date_briefing; ?>";
+		vCustomer = "<?php echo $briefingToEdit->customer_id; ?>/<?php echo $briefingToEdit->customer->customer_type_id; ?>";
+		vCustomerType = "<?php echo $briefingToEdit->customer_type_id; ?>";
+		vContact = "<?php echo $briefingToEdit->contact_id; ?>";
+		vProduct = "<?php echo $briefingToEdit->prod_id; ?>";
+		vIolProduct = "<?php echo $briefingToEdit->iol_prod_id; ?>";
+		vBriefingSource = "<?php echo $briefingToEdit->briefing_source_id; ?>";
+		vBriefingOwner = "<?php echo $briefingToEdit->briefing_owner_id; ?>";
+		vChallenge = "<?php echo $briefingToEdit->challenge; ?>";
+	<?php endif; ?>
+	if (isEmpty(vDateBriefing))
+		vDateBriefing = null;
+	else
+		vDateBriefing = new Date(vDateBriefing);
+	if (isEmpty(vContact))
+		vContact = -1;
+	if (isEmpty(vChallenge))
+		vChallenge = 0;
+	vChallenge = (vChallenge == 1);
+<?php endif; ?>
+
+if (optionsBriefingSource.length == 0) {
+	optionsBriefingSource = "[{}]";
+	optionsGroupBriefingSource = "[{}]";
+} else {
+	optionsBriefingSource.unshift("{ value:'-1', text:'<?php echo trans('briefings.sourcePH'); ?>' }");
+	optionsBriefingSource = optionsBriefingSource.join(",");
+	optionsBriefingSource = "[" + optionsBriefingSource + "]";
+	optionsGroupBriefingSource = optionsGroupBriefingSource.join(",");
+	optionsGroupBriefingSource = "[" + optionsGroupBriefingSource + "]";
+}
+
+$(document).ready(function() {
+	if (typeof briefingsConfig === 'function')
+		briefingsConfig();
+});
+</script>

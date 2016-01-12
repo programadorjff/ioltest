@@ -1,0 +1,31 @@
+<?php $__env->startSection('content'); ?>
+  <div class="row">
+    <div class="col-sm-8 col-sm-offset-2">
+      <h1 class="page-header"><?php echo trans('navBar.signUp'); ?></h1>
+
+      <?php echo $__env->make('includes.messages', array_except(get_defined_vars(), array('__data', '__path')))->render(); ?>
+
+      <?php echo Form::open(array('route' => 'post_signup')); ?>
+
+      <div class="form-group">
+        <label for="email"><?php echo trans('login.email'); ?></label>
+        <input name="email" type="email" class="form-control" placeholder="<?php echo trans('login.placeHolderEmail'); ?>"
+               value="<?php echo Input::old('email'); ?>" required autofocus>
+      </div>
+      <div class="form-group">
+        <label for="password"><?php echo trans('login.pass'); ?></label>
+        <input name="password" type="password" class="form-control" placeholder="<?php echo trans('login.placeHolderPass'); ?>" required>
+      </div>
+      <div class="form-group">
+        <label for="password_confirmation"><?php echo trans('signUp.passConf'); ?></label>
+        <input name="password_confirmation" type="password" class="form-control" placeholder="<?php echo trans('signUp.passConf'); ?>"
+               required>
+      </div>
+      <button class="btn btn-default btn-block" type="submit"><?php echo trans('navBar.signUp'); ?></button>
+      <?php echo Form::close(); ?>
+
+    </div>
+  </div>
+<?php $__env->stopSection(); ?>
+
+<?php echo $__env->make('layouts.master', array_except(get_defined_vars(), array('__data', '__path')))->render(); ?>

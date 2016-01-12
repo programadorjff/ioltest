@@ -1,0 +1,10 @@
+<script type="text/javascript">
+var searchBriefingsLabel = "<?php echo trans('briefings.searchBriefingsLabel'); ?>";
+var dateBriefingError = "<?php echo trans('briefings.dateBriefingError'); ?>";
+
+$(document).ready(function() {
+	
+	if (typeof briefingsConfig === 'function')
+		briefingsConfig();
+});
+</script>

@@ -1,0 +1,93 @@
+<script type="text/javascript">
+var auxMonthsFull = "<?php echo trans('datePicker.monthsFull'); ?>";
+var auxMonthsShort = "<?php echo trans('datePicker.monthsShort'); ?>";
+var auxWeekdaysFull = "<?php echo trans('datePicker.weekdaysFull'); ?>"; 
+var auxWeekdaysShort = "<?php echo trans('datePicker.weekdaysShort'); ?>";
+var todayDP = "<?php echo trans('datePicker.today'); ?>";
+var clearDP = "<?php echo trans('datePicker.clear'); ?>";
+var closeDP = "<?php echo trans('datePicker.close'); ?>";
+var firstDayDP = parseInt("<?php echo trans('datePicker.firstDay'); ?>");
+var dateFormatDP = "<?php echo trans('datePicker.dateFormat'); ?>";
+var dateFormatToSubmitDP = "<?php echo trans('datePicker.dateFormatToSubmit'); ?>";
+var monthsFullDP = auxMonthsFull.split(',');
+var monthsShortDP = auxMonthsShort.split(',');
+var weekdaysFullDP = auxWeekdaysFull.split(','); 
+var weekdaysShortDP = auxWeekdaysShort.split(',');
+
+var auxDateFormats = "<?php echo trans('date.dateFormats'); ?>"; 
+var dateFormatsDJ = auxDateFormats.split(',');
+
+var objDateFormat = "<?php echo trans('date.dateFormat'); ?>";
+var hiddenDateFormat = "yyyy-MM-dd HH:mm:ss";
+
+var labelCreateSelectize = "<?php echo trans('selectize.labelCreate'); ?>";
+
+$(document).ready(function() {
+
+	jQuery.extend(jQuery.fn.dataTable.defaults, {
+		"buttons": [
+			{"extend": "copy",
+			"text": "<?php echo trans('master.buttonCopy.text'); ?>"},
+			"csv","excel","pdf",
+			{"extend": "print",
+			"text": "<?php echo trans('master.buttonPrint.text'); ?>"},
+		],
+    	"pagingType": "full_numbers",
+    	"language": {
+        	"lengthMenu": "<?php echo trans('master.lengthMenu'); ?>",
+        	"zeroRecords": "<?php echo trans('master.zeroRecords'); ?>",
+        	"info": "<?php echo trans('master.info'); ?>",
+        	"infoEmpty": "<?php echo trans('master.infoEmpty'); ?>",
+        	"infoFiltered": "<?php echo trans('master.infoFiltered'); ?>",
+        	"search": "<?php echo trans('master.search'); ?>",
+        	"paginate": {
+            	"first":      "<?php echo trans('master.first'); ?>",
+            	"last":       "<?php echo trans('master.last'); ?>",
+            	"next":       "<?php echo trans('master.next'); ?>",
+            	"previous":   "<?php echo trans('master.previous'); ?>"
+        	},
+        	"buttons": {
+                "copyTitle": "<?php echo trans('master.buttonCopy.title'); ?>",
+                "copySuccess": {
+                    "_": "<?php echo trans('master.buttonCopy.info0'); ?>",
+                    "1": "<?php echo trans('master.buttonCopy.info1'); ?>"
+                }
+            }
+    	},
+    	"initComplete": function() {
+            $(this).DataTable().buttons().container().appendTo($('#dtButtons'));
+        }
+	});
+
+    jQuery.extend(jQuery.fn.pickadate.defaults, {
+        monthsFull: monthsFullDP,
+        monthsShort: monthsShortDP,
+        weekdaysFull: weekdaysFullDP,
+        weekdaysShort: weekdaysShortDP,
+        selectYears: true,
+        selectMonths: true,
+        today: todayDP,
+        clear: clearDP,
+        close: closeDP,
+        firstDay: firstDayDP,
+        format: dateFormatDP,
+        formatSubmit: dateFormatToSubmitDP
+    });
+
+    jQuery.extend(jQuery.fn.selectize.defaults, {
+        labelCreate: labelCreateSelectize
+    });
+
+    $.ajaxSetup({
+    	   headers: { 'X-CSRF-Token' : $('meta[name=_token]').attr('content') }
+    });
+    
+});
+</script>
+<?php if(isset($activePage)): ?>
+	<?php if($activePage == 'briefings'): ?>
+		<?php echo $__env->make('pages.briefings.header', array_except(get_defined_vars(), array('__data', '__path')))->render(); ?>
+	<?php elseif($activePage == 'budgets'): ?>
+		<?php echo $__env->make('pages.budgets.header', array_except(get_defined_vars(), array('__data', '__path')))->render(); ?>
+	<?php endif; ?>
+<?php endif; ?>

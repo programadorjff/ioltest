@@ -1,0 +1,75 @@
+<?php $__env->startSection('content'); ?>
+
+  <h1><?php echo trans('briefings.title'); ?></h1>
+
+  <hr>
+
+  <?php echo $__env->make('includes.messages', array_except(get_defined_vars(), array('__data', '__path')))->render(); ?>
+
+  <ul class="nav nav-tabs">
+    <li class="active"><a href="#list" data-toggle="tab"><?php echo trans('briefings.show'); ?></a></li>
+    <li><a href="#add" data-toggle="tab"><?php echo trans('briefings.add'); ?></a></li>
+  </ul>
+
+  <div id="myTabContent" class="tab-content">
+    <br>
+
+    <div class="tab-pane active in" id="list">
+      <?php if($records && $records->count()): ?>
+        <table id="records" class="table table-striped" cellspacing="0" width="100%">
+          <thead>
+          <tr>
+            <th>Artist</th>
+            <th>Title</th>
+            <th>Year</th>
+            <th></th>
+          </tr>
+          </thead>
+          <tbody>
+          <?php foreach($records as $record): ?>
+            <tr>
+              <td><?php echo $record->artist; ?></td>
+              <td><?php echo $record->title; ?></td>
+              <td><?php echo $record->year ? $record->year : 'Unknown'; ?></td>
+              <td>
+                <?php echo Form::open(array('route' => 'delete_record')); ?>
+
+                <input type="hidden" name="id" value="<?php echo $record->id; ?>">
+                <button type="submit" class="close">&times;</button>
+                <?php echo Form::close(); ?>
+
+              </td>
+            </tr>
+          <?php endforeach; ?>
+          </tbody>
+        </table>
+      <?php else: ?>
+        <p>You don't have any records yet.</p>
+      <?php endif; ?>
+    </div>
+
+    <div class="tab-pane" id="add">
+      <?php echo Form::open(array('route' => 'add_record')); ?>
+
+      <div class="form-group">
+        <label for="artist">Artist</label>
+        <input name="artist" type="text" class="form-control" placeholder="Enter artist"
+               value="<?php echo Input::old('artist'); ?>" required>
+      </div>
+      <div class="form-group">
+        <label for="title">Title</label>
+        <input name="title" type="text" class="form-control" placeholder="Enter title"
+               value="<?php echo Input::old('title'); ?>" required>
+      </div>
+      <div class="form-group">
+        <label for="year">Year (optional)</label>
+        <input name="year" type="number" class="form-control" value="<?php echo Input::old('year'); ?>">
+      </div>
+      <button class="btn btn-default" type="submit"><?php echo trans('briefings.save'); ?></button>
+      <?php echo Form::close(); ?>
+
+    </div>
+
+<?php $__env->stopSection(); ?>
+
+<?php echo $__env->make('layouts.master', array_except(get_defined_vars(), array('__data', '__path')))->render(); ?>

@@ -1,0 +1,31 @@
+<?php if(($errors = Session::get('errors')) || ($error = Session::get('error'))): ?>
+  <div class="alert alert-danger">
+    <button type="button" class="close" data-dismiss="alert">&times;</button>
+    <p><b><?php echo trans('system.applicationErrors'); ?></b></p>
+    <ul>
+    <?php if(isset($error)): ?>
+    	<li><?php echo $error; ?></li>
+    <?php else: ?>
+	    <?php foreach($errors->all() as $auxError): ?>
+	    	<li><?php echo $auxError; ?></li>
+	    <?php endforeach; ?>
+	<?php endif; ?>
+    </ul>
+  </div>
+<?php endif; ?>
+
+<?php if(($messages = Session::get('messages')) || ($message = Session::get('message'))): ?>
+  <div class="alert alert-success">
+    <button type="button" class="close" data-dismiss="alert">&times;</button>
+    <p><b><?php echo trans('system.applicationMessages'); ?></b></p>
+    <ul>
+    <?php if(isset($message)): ?> 
+    	<li><?php echo $message; ?></li>
+    <?php else: ?>
+	    <?php foreach($messages->all() as $auxMessage): ?>
+	    	<li><?php echo $auxMessage; ?></li>
+	    <?php endforeach; ?>
+    <?php endif; ?>
+    </ul>
+  </div>
+<?php endif; ?>
